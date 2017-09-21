@@ -1,0 +1,32 @@
+body {
+  background-color: #CDCDCD;
+
+}
+
+li {
+  list-style: none;
+  background-color: #fff;
+  margin-top: 10px;
+}
+
+h1 {
+  color: #DDD;
+  background-color: rgba(47,47,47,0.98);
+}
+
+input {
+  border-radius: 5px;
+}
+
+button {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#did li {
+  opacity: 0.5;
+}
+
+span {
+  margin-left: 10px;
+}
