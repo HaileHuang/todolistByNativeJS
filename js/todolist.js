@@ -44,9 +44,16 @@ function createItem(value, checked) {
   }
   var span = document.createElement('span');
   var itemText = document.createTextNode(value);
+  var delButton = document.createElement('button');
+  var delText = document.createTextNode('Del');
   span.appendChild(itemText);
+  delButton.appendChild(delText);
+  delButton.onclick = function() {
+    return del(this);
+  }
   doingItem.appendChild(checkBox);
   doingItem.appendChild(span);
+  doingItem.appendChild(delButton);
 
   return doingItem;
 }
@@ -64,6 +71,10 @@ function changeState(checkboxElement) {
     doingList.appendChild(didItem);
     didList.removeChild(checkboxElement.parentNode);
   }
+}
+
+function del(delElemnt) {
+  delElemnt.parentNode.parentNode.removeChild(delElemnt.parentNode);
 }
 
 function isDoingItem(e) {
