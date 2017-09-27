@@ -1,75 +1,12 @@
 function addLoadEvent(func) {
-  var oldOnload = window.onload;
-  if(typeof window.onload != 'function') {
+  const oldOnload = window.onload;
+  if (typeof window.onload !== 'function') {
     window.onload = func;
   } else {
-    window.onload = function() {
+    window.onload = () => {
       oldOnload();
-      func;
-    }
-  }
-}
-
-function prepareTodolist() {
-  if(!document.getElementsByTagName) return false;
-  if(!document.getElementsByTagName('button')[0]) return false;
-  var button = document.getElementsByTagName('button')[0];
-  button.onclick = add;
-}
-
-function add() {
-  if(!document.getElementsByTagName) return false;
-  if(!document.getElementById) return false;
-  if(!document.createElement) return false;
-  if(!document.createTextNode) return false;
-  if(!document.getElementById('doing')) return false;
-  if(!document.getElementById('did')) return false;
-  var input = document.getElementsByTagName('input')[0];
-  if(!input || !input.value)return false;
-
-  var doingList = document.getElementById('doing');
-  doingList.appendChild(createItem(input.value));
-  input.value = '';
-  return false;
-}
-
-function createItem(value, checked) {
-  if(!checked) checked = false;
-  var doingItem = document.createElement('li');
-  var checkBox = document.createElement('input');
-  checkBox.setAttribute('type', 'checkbox');
-  checkBox.checked = checked;
-  checkBox.onclick = function() {
-    return changeState(this);
-  }
-  var span = document.createElement('span');
-  var itemText = document.createTextNode(value);
-  var delButton = document.createElement('button');
-  var delText = document.createTextNode('Del');
-  span.appendChild(itemText);
-  delButton.appendChild(delText);
-  delButton.onclick = function() {
-    return del(this);
-  }
-  doingItem.appendChild(checkBox);
-  doingItem.appendChild(span);
-  doingItem.appendChild(delButton);
-
-  return doingItem;
-}
-
-function changeState(checkboxElement) {
-  var didList = document.getElementById('did');
-  var doingList = document.getElementById('doing');
-  var value = checkboxElement.nextSibling.firstChild.nodeValue;
-  if(isDoingItem(checkboxElement)) {
-    var didItem = createItem(value, true);
-    doingList.removeChild(checkboxElement.parentNode);
-    didList.appendChild(didItem);
-  } else {
-    var didItem = createItem(value, false);
-    doingList.appendChild(didItem);
-    didList.removeChild(checkboxElement.parentNode);
+      func();
+    };
   }
 }
 
@@ -79,6 +16,69 @@ function del(delElemnt) {
 
 function isDoingItem(e) {
   return e.parentNode.parentNode === document.getElementById('doing');
+}
+
+function createItem(value, checked) {
+  const doingItem = document.createElement('li');
+  const checkBox = document.createElement('input');
+  checkBox.setAttribute('type', 'checkbox');
+  checkBox.checked = checked;
+  checkBox.onclick = function () {
+    return changeState(this);
+  };
+  const span = document.createElement('span');
+  const itemText = document.createTextNode(value);
+  const delButton = document.createElement('button');
+  const delText = document.createTextNode('Del');
+  span.appendChild(itemText);
+  delButton.appendChild(delText);
+  delButton.onclick = function () {
+    return del(this);
+  };
+  doingItem.appendChild(checkBox);
+  doingItem.appendChild(span);
+  doingItem.appendChild(delButton);
+
+  return doingItem;
+}
+
+function changeState(checkboxElement) {
+  const didList = document.getElementById('did');
+  const doingList = document.getElementById('doing');
+  const value = checkboxElement.nextSibling.firstChild.nodeValue;
+  if (isDoingItem(checkboxElement)) {
+    const didItem = createItem(value, true);
+    doingList.removeChild(checkboxElement.parentNode);
+    didList.appendChild(didItem);
+  } else {
+    const didItem = createItem(value, false);
+    doingList.appendChild(didItem);
+    didList.removeChild(checkboxElement.parentNode);
+  }
+}
+
+function add() {
+  if (!document.getElementsByTagName) return false;
+  if (!document.getElementById) return false;
+  if (!document.createElement) return false;
+  if (!document.createTextNode) return false;
+  if (!document.getElementById('doing')) return false;
+  if (!document.getElementById('did')) return false;
+  const input = document.getElementsByTagName('input')[0];
+  if (!input || !input.value) return false;
+
+  const doingList = document.getElementById('doing');
+  doingList.appendChild(createItem(input.value));
+  input.value = '';
+  return false;
+}
+
+function prepareTodolist() {
+  if (!document.getElementsByTagName) return false;
+  if (!document.getElementsByTagName('button')[0]) return false;
+  const button = document.getElementsByTagName('button')[0];
+  button.onclick = add;
+  return false;
 }
 
 addLoadEvent(prepareTodolist);
