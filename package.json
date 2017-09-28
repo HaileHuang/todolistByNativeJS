@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify ./js/todolist.js -o public/bundle.js && cp style/todolist.css public/ && node app.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,30 @@
   },
   "homepage": "https://github.com/HaileHuang/todolistByNativeJS#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.7.2",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0"
+  },
+  "dependencies": {
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "concat-cli": "^4.0.0",
+    "express": "^4.15.5",
+    "idb": "^2.0.4",
+    "watchify": "^3.9.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
   }
 }
